@@ -1,0 +1,53 @@
+.center-text {
+    text-align: center;
+  }
+
+.centered-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+    align-items: center;    
+    height:100vh;      
+    width: 100%;             
+    background-color: #f0f0f0; 
+  }
+  
+ 
+  .blog {
+    margin-left:25%;
+    height:30vh;
+    width: 30vh;
+    max-width: 800px; 
+    padding: 0px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+    border-radius: 8px; 
+    overflow: hidden;
+    position:relative;
+    margin:10%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+  .blog img{
+    width: 100%;    
+    height: 100%;  
+    object-fit: cover; 
+    opacity: 0.7;   
+    position: absolute; 
+    top: 0;
+    left: 0;
+  }
+  .blog p{
+    font-weight: bold;
+    color:#333;
+    position:absolute;
+  }
+  .blog:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  /* Add some padding inside the card container */
+  .container {
+    padding: 2px 16px;
+  }
