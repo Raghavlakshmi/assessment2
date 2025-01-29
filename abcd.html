@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Reader</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        .center-text {
+            text-align: center;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+        .centereddiv {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .blog {
+            width: 30%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+        }
+        .blog img {
+            width: 100%;
+            height: auto;
+        }
+        .blog .views {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 14px;
+            color: gray;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="center-text">Blog Reader</h1>
+    
+    <div class="controls">
+        <button id="addBlog">Add New Blog</button>
+    </div>
+    
+    <div class="centereddiv" id="blogContainer"></div>
+
+    <div id="blogModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add/Edit Blog</h2>
+            <input type="text" id="blogTitle" placeholder="Enter Blog Title">
+            <textarea id="blogContent" placeholder="Enter Blog Content"></textarea>
+            <button id="saveBlog">Save</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('addBlog').addEventListener('click', function() {
+            document.getElementById('blogModal').style.display = 'flex';
+        });
+
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('blogModal').style.display = 'none';
+        });
+
+        document.getElementById('saveBlog').addEventListener('click', function() {
+            let title = document.getElementById('blogTitle').value;
+            let content = document.getElementById('blogContent').value;
+            if (title && content) {
+                let blogContainer = document.getElementById('blogContainer');
+                let newBlog = document.createElement('div');
+                newBlog.classList.add('blog');
+                newBlog.innerHTML = `
+                    <h3>${title}</h3>
+                    <p>${content}</p>
+                    <button class='delete'>Delete</button>
+                    <button class='edit'>Edit</button>
+                    <span class='views'>👁️ 0</span>
+                `;
+                blogContainer.appendChild(newBlog);
+                document.getElementById('blogModal').style.display = 'none';
+            }
+        });
+
+        document.getElementById('blogContainer').addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete')) {
+                e.target.parentElement.remove();
+            }
+            if (e.target.classList.contains('edit')) {
+                let blog = e.target.parentElement;
+                document.getElementById('blogTitle').value = blog.querySelector('h3').innerText;
+                document.getElementById('blogContent').value = blog.querySelector('p').innerText;
+                document.getElementById('blogModal').style.display = 'flex';
+                blog.remove();
+            }
+        });
+    </script>
+</body>
+</html>
