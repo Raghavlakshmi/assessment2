@@ -4,34 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Reader</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
-        .center-text {
-            text-align: center;
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
         }
-        .controls {
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #008080;
+            padding: 15px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
             display: flex;
-            justify-content: center;
-            margin: 20px;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .navbar ul li.right {
+            margin-left: auto;
+        }
+
+        .navbar ul li.right button {
+            background-color: #ff6347;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar ul li.right button:hover {
+            background-color: #e55347;
+        }
+
+        /* Blog container with better spacing */
         .centereddiv {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
+            margin-top: 30px;
         }
+
         .blog {
             width: 30%;
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-            position: relative;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 15px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .blog img {
-            width: 100%;
-            height: auto;
+
+        .blog:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
+
+        .blog h3 {
+            color: #ff6347;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .blog p {
+            font-size: 1em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .blog button {
+            background-color: #ff6347;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .blog button:hover {
+            background-color: #e55347;
+        }
+
         .blog .views {
             position: absolute;
             top: 5px;
@@ -39,6 +114,8 @@
             font-size: 14px;
             color: gray;
         }
+
+        /* Modal styling */
         .modal {
             display: none;
             position: fixed;
@@ -47,78 +124,189 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
             width: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal h2 {
+            color: #008080;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .modal input,
+        .modal textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .modal input:focus,
+        .modal textarea:focus {
+            border-color: #008080;
+        }
+
+        .modal button {
+            background-color: #ff6347;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .modal button:hover {
+            background-color: #e55347;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 1.5em;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        #hi {
+            color: #ffffff;
+            font-size: 2.2em;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* New page style for reading the blog */
+        .readPage {
+            padding: 30px;
+            background-color: #f0f8ff;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        .readPage h1 {
+            color: #008080;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .readPage p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .readPage .views {
+            font-size: 1.2em;
+            color: #888;
         }
     </style>
 </head>
 <body>
-    <h1 class="center-text">Blog Reader</h1>
-    
-    <div class="controls">
-        <button id="addBlog">Add New Blog</button>
+
+<nav class="navbar">
+    <ul>
+        <li id="hi">BLOG READER</li>
+        <li class="right"><button id="addBlog">Add New Blog</button></li>
+    </ul>
+</nav>
+
+<div class="centereddiv" id="blogContainer"></div>
+
+<div id="blogModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalTitle">Add/Edit Blog</h2>
+        <input type="text" id="blogTitle" placeholder="Enter Blog Title">
+        <textarea id="blogContent" placeholder="Enter Blog Content"></textarea>
+        <button id="saveBlog">Save</button>
     </div>
-    
-    <div class="centereddiv" id="blogContainer"></div>
+</div>
 
-    <div id="blogModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modalTitle">Add/Edit Blog</h2>
-            <input type="text" id="blogTitle" placeholder="Enter Blog Title">
-            <textarea id="blogContent" placeholder="Enter Blog Content"></textarea>
-            <button id="saveBlog">Save</button>
-        </div>
-    </div>
+<script>
+    document.getElementById('addBlog').addEventListener('click', function() {
+        document.getElementById('blogModal').style.display = 'flex';
+    });
 
-    <script>
-        document.getElementById('addBlog').addEventListener('click', function() {
-            document.getElementById('blogModal').style.display = 'flex';
-        });
+    document.querySelector('.close').addEventListener('click', function() {
+        document.getElementById('blogModal').style.display = 'none';
+    });
 
-        document.querySelector('.close').addEventListener('click', function() {
+    document.getElementById('saveBlog').addEventListener('click', function() {
+        let title = document.getElementById('blogTitle').value;
+        let content = document.getElementById('blogContent').value;
+        if (title && content) {
+            let blogContainer = document.getElementById('blogContainer');
+            let newBlog = document.createElement('div');
+            newBlog.classList.add('blog');
+            newBlog.innerHTML = `
+                <h3>${title}</h3>
+                <p>${content}</p>
+                <button class='delete'>Delete</button>
+                <button class='edit'>Edit</button>
+                <button class='read'>Read</button>
+                <span class='views'>👁️ 0</span>
+            `;
+            blogContainer.appendChild(newBlog);
             document.getElementById('blogModal').style.display = 'none';
-        });
+            document.getElementById('blogTitle').value = '';
+            document.getElementById('blogContent').value = '';
+        }
+    });
 
-        document.getElementById('saveBlog').addEventListener('click', function() {
-            let title = document.getElementById('blogTitle').value;
-            let content = document.getElementById('blogContent').value;
-            if (title && content) {
-                let blogContainer = document.getElementById('blogContainer');
-                let newBlog = document.createElement('div');
-                newBlog.classList.add('blog');
-                newBlog.innerHTML = `
-                    <h3>${title}</h3>
+    document.getElementById('blogContainer').addEventListener('click', function(e) {
+        if (e.target.classList.contains('delete')) {
+            e.target.parentElement.remove();
+        }
+        if (e.target.classList.contains('edit')) {
+            let blog = e.target.parentElement;
+            document.getElementById('blogTitle').value = blog.querySelector('h3').innerText;
+            document.getElementById('blogContent').value = blog.querySelector('p').innerText;
+            document.getElementById('blogModal').style.display = 'flex';
+            blog.remove();
+        }
+        if (e.target.classList.contains('read')) {
+            let blog = e.target.parentElement;
+            let title = blog.querySelector('h3').innerText;
+            let content = blog.querySelector('p').innerText;
+            let views = blog.querySelector('.views').innerText.split(' ')[1];
+
+            // Open a new window with the blog content
+            let newWindow = window.open('', '_blank');
+            newWindow.document.write(`
+                <div class="readPage">
+                    <h1>${title}</h1>
                     <p>${content}</p>
-                    <button class='delete'>Delete</button>
-                    <button class='edit'>Edit</button>
-                    <span class='views'>👁️ 0</span>
-                `;
-                blogContainer.appendChild(newBlog);
-                document.getElementById('blogModal').style.display = 'none';
-            }
-        });
+                    <p class="views">Views: ${views}</p>
+                </div>
+            `);
+            newWindow.document.title = title;
 
-        document.getElementById('blogContainer').addEventListener('click', function(e) {
-            if (e.target.classList.contains('delete')) {
-                e.target.parentElement.remove();
-            }
-            if (e.target.classList.contains('edit')) {
-                let blog = e.target.parentElement;
-                document.getElementById('blogTitle').value = blog.querySelector('h3').innerText;
-                document.getElementById('blogContent').value = blog.querySelector('p').innerText;
-                document.getElementById('blogModal').style.display = 'flex';
-                blog.remove();
-            }
-        });
-    </script>
+            // Increment the view count in the original blog list
+            let viewsElement = blog.querySelector('.views');
+            let currentViews = parseInt(viewsElement.innerText.split(' ')[1]);
+            viewsElement.innerText = `👁️ ${currentViews + 1}`;
+        }
+    });
+</script>
 </body>
 </html>
