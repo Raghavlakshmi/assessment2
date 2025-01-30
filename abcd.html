@@ -13,7 +13,6 @@
             padding: 0;
         }
 
-        /* Navbar styling */
         .navbar {
             background-color: #008080;
             padding: 15px;
@@ -56,7 +55,7 @@
             background-color: #e55347;
         }
 
-        /* Blog container with better spacing */
+       
         .centereddiv {
             display: flex;
             flex-wrap: wrap;
@@ -115,7 +114,7 @@
             color: gray;
         }
 
-        /* Modal styling */
+     
         .modal {
             display: none;
             position: fixed;
@@ -194,7 +193,7 @@
             font-family: 'Arial', sans-serif;
         }
 
-        /* New page style for reading the blog */
+       
         .readPage {
             padding: 30px;
             background-color: #f0f8ff;
@@ -290,7 +289,7 @@
             let content = blog.querySelector('p').innerText;
             let views = blog.querySelector('.views').innerText.split(' ')[1];
 
-            // Open a new window with the blog content
+         
             let newWindow = window.open('', '_blank');
             newWindow.document.write(`
                 <div class="readPage">
@@ -301,7 +300,7 @@
             `);
             newWindow.document.title = title;
 
-            // Increment the view count in the original blog list
+            
             let viewsElement = blog.querySelector('.views');
             let currentViews = parseInt(viewsElement.innerText.split(' ')[1]);
             viewsElement.innerText = `👁️ ${currentViews + 1}`;
